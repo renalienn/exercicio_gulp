@@ -1,0 +1,79 @@
+@use 'variaveis';
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: variaveis.$font;
+}
+
+@mixin elementoForm() {
+    padding: 8px;
+    display: block;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+body{
+    background-color: variaveis.$bgColor;
+}
+
+.container{
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+header{
+    background-color: variaveis.$primary;
+    padding: 16px 0;
+    text-align: center;
+    color: #fff;
+}
+
+.form-container{
+    height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 760px;
+
+    h2{
+        font-size: 3em;
+        text-align: center;
+    }
+
+    form{
+        width: 100%;
+        max-width: 500px;
+        margin-top: 50px;
+
+        label{
+            font-weight: bold;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        input{
+            @include elementoForm();
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid variaveis.$primary;
+        }
+
+        button{
+            @include elementoForm();
+            background-color: variaveis.$secondary;
+            font-size: 30px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+
+            &:hover{
+                background-color: lighten(variaveis.$secondary, 10%);
+            }
+        }
+    }
+}

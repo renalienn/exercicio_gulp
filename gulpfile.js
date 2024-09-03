@@ -1,27 +1,35 @@
-const { src, dest, series, watch } = require('gulp');
+const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
-const imagemin = require('gulp-imagemin');
+const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
-const pipeline = require('readable-stream').pipeline;
+const obfuscate = require('gulp-obfuscate');
+const imagemin = require('gulp-imagemin');
 
-function compileSass() {
-  return src('src/sass/**/*.scss') 
-    .pipe(sass().on('error', sass.logError))
-    .pipe(dest('dist/css'));
+function comprimiImagens() {
+    return gulp.src('./source/images/*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('./build/images'))
 }
 
-function compressImages() {
-  return src('src/images/*') 
-    .pipe(imagemin())
-    .pipe(dest('dist/images'));
+function comprimiJavaScript(){
+    return gulp.src('./source/scripts/*js')
+        .pipe(uglify())
+        .pipe(obfuscate())
+        .pipe(gulp.dest('./build/scripts'))
 }
 
-function compressJs() {
-  return pipeline(
-    src('src/js/**/*.js'), 
-    uglify(),
-    dest('dist/js')
-  );
+function compilaSass(){
+    return gulp.src('./source/styles/main.scss')
+        .pipe(sourcemaps.init())
+        .pipe(sass({
+            outputStyle: 'compressed'
+        }))
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest('./build/styles'));
 }
 
-exports.default = series(compileSass, compressImages, compressJs);
+exports.default = function(){
+    gulp.watch('./source/styles/*.scss', {ignoreInitial: false}, gulp.series(compilaSass))
+    gulp.watch('./source/scripts/*js', {ignoreInitial: false}, gulp.series(comprimiJavaScript))
+    gulp.watch('./source/images/*', {ignoreInitial: false}, gulp.series(comprimiImagens))
+}
