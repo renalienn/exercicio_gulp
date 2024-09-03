@@ -1,0 +1,20 @@
+{
+    "name": "gulp_automacao",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "gulp": "gulp",
+      "sass": "sass ./src/sass/main.scss ./dist/css/main.css --watch",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "gulp": "^4.0.2",
+      "gulp-image": "6.2.1",
+      "gulp-sass": "^5.1.0",
+      "gulp-uglify": "^3.0.2",
+      "sass": "^1.58.3"
+    }
+  }
